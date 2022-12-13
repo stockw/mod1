@@ -28,10 +28,25 @@ class Person {
         this.charisma = charisma;
     }
     convince(member){
-        console.log(this.name);
-    }
-    discourage(){
+        // make equation to raise confidence
+        member.confidence += 5;
+        // me.charisma +-2
+        // charisma + randomVar from -2 to 2
 
+        let randomVar = Math.floor(Math.random()*5) - 2
+
+        let charismaEffect = this.charisma + randomVar;
+        member.confidence += charismaEffect;
+    }
+    discourage(meObject){
+        let randomVar = Math.floor(Math.random()*5) - 2
+// console.log(me);
+        let charismaEffect = this.charisma + randomVar;
+        meObject.confidence -= charismaEffect;
+
+    
+        // console.log(charismaEffect);
+        // console.log(me);
     }
 }
 
@@ -55,26 +70,44 @@ class FriendGroup {
     myFriendGroup.addFriend("James", 10, 50, 10);
     myFriendGroup.addFriend("Darren", 10, 70, 10);
 
-    console.log(myFriendGroup);
+    
 
     //loop
     const convinceGroup = ()=>{
         let friends=myFriendGroup.friends;
         for (let i=0; i<myFriendGroup.friends.length; i++){
-            if (me.confidence < me.requiredConfidence) {
-                break;
+            if (me.confidence >= me.requiredConfidence) {
+                myFriendGroup.goingOnTrip = true;
+            }
+            let keepLooping = true;
+            while (keepLooping){
+                me.convince(friends[i]);
+                if (friends[i].confidence >= friends[i].requiredConfidence) {
+                    console.log(`${friends[i].name} was convinced! Their is now ${friends[i]}`);
+                    break;
+                } 
+                
+                friends[i].discourage(me);
+                if (me.confidence < me.requiredConfidence) {
+                    console.log(`${me.name} was discouraged!`);
+                    break;
             }
 
             // we go first = convince()
-            me.convince(friends[i])
+           
 
             // are they convinced enough?
             // go to next person
 
 
             //discourage()
+            
+           
+            
+
             // check if we are too discouraged
-            console.log(friends[i]);
+            // console.log(friends[i]);
         }
-    }
+         } }
     convinceGroup()
+    console.log(myFriendGroup);
